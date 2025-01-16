@@ -6,14 +6,9 @@ import React, { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useTimerSettings } from "./hooks/TimerContext";
 import TimerSettings from "./types/TimerSetting";
-import {
-  BG_COLOR_ACTIVE,
-  TEXT_COLOR_ACTIVE,
-  TEXT_COLOR_DEFAULT,
-  TEXT_COLOR_LIGHT,
-  WARNING_COLOR,
-} from "./constants/Timer";
+
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "./constants/Colors";
 
 const Custom: React.FC = () => {
   const { timeSettings, updateSettings } = useTimerSettings();
@@ -41,16 +36,16 @@ const Custom: React.FC = () => {
         options={{
           presentation: "modal",
           headerShown: true,
-          headerStyle: { backgroundColor: BG_COLOR_ACTIVE },
+          headerStyle: { backgroundColor: Colors.default.background },
           title: "",
-          headerTintColor: "#f3f5f9",
+          headerTintColor: Colors.default.text,
           headerBackVisible: true,
           headerBackButtonDisplayMode: "minimal",
           headerLeft: () => (
             <MaterialCommunityIcons
               name="timer-outline"
               size={24}
-              color={TEXT_COLOR_LIGHT}
+              color={Colors.default.text}
             />
           ),
         }}
@@ -114,7 +109,7 @@ const Custom: React.FC = () => {
           <MaterialCommunityIcons
             name="check"
             size={40}
-            color={TEXT_COLOR_LIGHT}
+            color={Colors.default.textLight}
           />
         </Pressable>
       </View>

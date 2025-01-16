@@ -18,8 +18,13 @@ const Settings: React.FC = () => {
   }, [timeSettings]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar style="auto" translucent={false} />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        padding: 0,
+        backgroundColor: Colors.default.background,
+      }}
+    >
       <Stack.Screen
         name="index"
         options={{
@@ -124,7 +129,7 @@ const Settings: React.FC = () => {
         <Pressable style={style.button} onPress={() => router.replace("/")}>
           <MaterialCommunityIcons
             name="check"
-            size={60}
+            size={50}
             color={Colors.default.lightColor}
           />
         </Pressable>
