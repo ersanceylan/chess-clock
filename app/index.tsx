@@ -8,6 +8,8 @@ import { useCountdown } from "./hooks/countdown";
 import { useTimerSettings } from "./hooks/TimerContext";
 import { channelSwitchSound } from "./constants/Timer";
 import { Colors } from "./constants/Colors";
+import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { timeSettings } = useTimerSettings();
@@ -85,55 +87,67 @@ export default function Index() {
     playSound();
   }, [turn]);
 
+  useEffect(() => {
+    if (isRunning) {
+      activateKeepAwakeAsync().catch((error) => {
+        console.warn("Failed to activate keep awake:", error);
+      });
+    } else {
+      deactivateKeepAwake();
+    }
+  }, [isRunning]);
+
   return (
-    <View style={style.container}>
-      <View style={timerStyle.container}>
-        <Pressable
-          disabled={
-            (blackPlayer.isRunning && turn !== "w") ||
-            whitePlayer.timeLeft === 0
-          }
-          onPress={stopWhite}
-          style={[
-            timerStyle.timerPlayer,
-            turn === "w" && timerStyle.activePlayer,
-            { transform: [{ rotate: "180deg" }] },
-          ]}
-        >
-          <Time
-            isRunning={whitePlayer.isRunning}
-            timeLeft={whitePlayer.timeLeft}
-          />
-          <MoveCount moves={whiteMoves} />
-        </Pressable>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={style.container}>
+        <View style={timerStyle.container}>
+          <Pressable
+            disabled={
+              (blackPlayer.isRunning && turn !== "w") ||
+              whitePlayer.timeLeft === 0
+            }
+            onPress={stopWhite}
+            style={[
+              timerStyle.timerPlayer,
+              turn === "w" && timerStyle.activePlayer,
+              { transform: [{ rotate: "180deg" }] },
+            ]}
+          >
+            <Time
+              isRunning={whitePlayer.isRunning}
+              timeLeft={whitePlayer.timeLeft}
+            />
+            <MoveCount moves={whiteMoves} />
+          </Pressable>
 
-        <SettingsBar
-          start={start}
-          stop={stop}
-          restart={restart}
-          isRunning={isRunning}
-          turn={turn}
-        />
-
-        <Pressable
-          disabled={
-            (whitePlayer.isRunning && turn !== "b") ||
-            blackPlayer.timeLeft === 0
-          }
-          onPress={stopBlack}
-          style={[
-            timerStyle.timerPlayer,
-            turn === "b" && timerStyle.activePlayer,
-          ]}
-        >
-          <Time
-            isRunning={blackPlayer.isRunning}
-            timeLeft={blackPlayer.timeLeft}
+          <SettingsBar
+            start={start}
+            stop={stop}
+            restart={restart}
+            isRunning={isRunning}
+            turn={turn}
           />
-          <MoveCount moves={blackMoves} />
-        </Pressable>
+
+          <Pressable
+            disabled={
+              (whitePlayer.isRunning && turn !== "b") ||
+              blackPlayer.timeLeft === 0
+            }
+            onPress={stopBlack}
+            style={[
+              timerStyle.timerPlayer,
+              turn === "b" && timerStyle.activePlayer,
+            ]}
+          >
+            <Time
+              isRunning={blackPlayer.isRunning}
+              timeLeft={blackPlayer.timeLeft}
+            />
+            <MoveCount moves={blackMoves} />
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

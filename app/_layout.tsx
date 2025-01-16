@@ -1,10 +1,10 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { TimerProvider } from "./hooks/TimerContext";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native";
 import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Colors } from "./constants/Colors";
+import { TimerProvider } from "./hooks/TimerContext";
 
 export default function RootLayout() {
   const [fontLoaded] = useFonts({
@@ -15,21 +15,20 @@ export default function RootLayout() {
     return null;
   }
   return (
-    <SafeAreaView
+    <SafeAreaProvider
       style={{
         flex: 1,
         backgroundColor: Colors.default.background,
       }}
     >
-      <StatusBar hidden />
+      <StatusBar style="dark" backgroundColor="#000" />
       <TimerProvider>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="settings" />
           <Stack.Screen name="custom" options={{ presentation: "modal" }} />
         </Stack>
-        <StatusBar style="auto" />
       </TimerProvider>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }

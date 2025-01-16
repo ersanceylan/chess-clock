@@ -13,6 +13,7 @@ import {
   TEXT_COLOR_LIGHT,
   WARNING_COLOR,
 } from "./constants/Timer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Custom: React.FC = () => {
   const { timeSettings, updateSettings } = useTimerSettings();
@@ -34,7 +35,7 @@ const Custom: React.FC = () => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <Stack.Screen
         name="index"
         options={{
@@ -117,7 +118,7 @@ const Custom: React.FC = () => {
           />
         </Pressable>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

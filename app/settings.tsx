@@ -8,6 +8,7 @@ import { getTitle } from "./types/TimerSetting";
 import Animated, { SlideInLeft } from "react-native-reanimated";
 import { Colors } from "./constants/Colors";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings: React.FC = () => {
   const { timeSettings, updateSettings, presets } = useTimerSettings();
@@ -17,7 +18,7 @@ const Settings: React.FC = () => {
   }, [timeSettings]);
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar style="auto" translucent={false} />
       <Stack.Screen
         name="index"
@@ -51,12 +52,8 @@ const Settings: React.FC = () => {
         <ScrollView
           style={{
             width: "100%",
-            flex: 1,
           }}
-          contentContainerStyle={{
-            marginBottom: 50,
-            paddingBottom: 50,
-          }}
+          contentContainerStyle={{}}
         >
           {Object.values(presets)
             .sort((a, b) => a.time - b.time)
@@ -68,7 +65,8 @@ const Settings: React.FC = () => {
                 <Pressable
                   key={`preset-${index}`}
                   style={{
-                    padding: 12,
+                    paddingVertical: 6,
+                    paddingHorizontal: 12,
                     borderRadius: 8,
                     backgroundColor: selected
                       ? Colors.default.tint
@@ -131,7 +129,7 @@ const Settings: React.FC = () => {
           />
         </Pressable>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -126,7 +126,6 @@ export const Time: React.FC<{ timeLeft: number; isRunning?: boolean }> = ({
         </Text>
       </View>
       <View style={style.timerForeground}>
-        {timeObj.h !== "0" && <Text>{timeObj.h}:</Text>}
         <Animated.Text style={[style.timerText, runningColorStyle]}>
           {timeObj.m}
         </Animated.Text>
@@ -142,21 +141,11 @@ export const Time: React.FC<{ timeLeft: number; isRunning?: boolean }> = ({
 };
 
 const style = StyleSheet.create({
-  // activeSandEffect: {
-  //   flex: 1,
-  //   position: "absolute",
-  //   top: 0,
-  //   zIndex: 1,
-  //   width: "100%",
-  //   backgroundColor: `#ffdb1511`,
-  // },
   timerBackground: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    // borderWidth: 2,
-    // borderColor: "yellow",
     position: "absolute",
     zIndex: 0,
   },
@@ -165,8 +154,6 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    // borderWidth: 2,
-    // borderColor: "red",
     position: "absolute",
     zIndex: 1,
   },
